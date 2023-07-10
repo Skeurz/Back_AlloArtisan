@@ -7,6 +7,7 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,6 +21,7 @@ import com.projet.artisan.repository.PasswordResetTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -63,6 +65,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AppUser addUser(AppUser user) {
+        if (appUserRepository.existsByEmail(user.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "email deja existant");
+        }
+        if (appUserRepository.existsByUserName(user.getUserName())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "nom d'uti deja existant");
+        }
         String pw = user.getPassword();
         user.setPassword(passwordEncoder.encode(pw));
 

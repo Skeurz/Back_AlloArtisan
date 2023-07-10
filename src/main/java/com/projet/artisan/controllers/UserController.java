@@ -17,6 +17,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import javax.persistence.EntityNotFoundException;
 
 
@@ -142,13 +144,19 @@ public class UserController {
 
     private AppUserRepository repo;
     @PostMapping(path="/register")   // Création du compte
-    public AppUser appUser ( @RequestBody AppUser user){
+    public AppUser appUser(@RequestBody AppUser user) {
         if (user.getProfileImage() == null || user.getProfileImage().isEmpty()) {
             user.setProfileImage(Constants.DEFAULT_PROFILE_IMAGE);
         }
-       return accountService.addUser(user);
-        //  return ResponseEntity.ok(repo.save(user));
+        try {
+            return accountService.addUser(user);
+        } catch (ResponseStatusException ex) {
+            throw ex; // Let the exception propagate to capture and handle it in the frontend
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error creating account", ex);
+        }
     }
+
 
 
 

@@ -45,14 +45,11 @@ public class ArtisanApplication {
 			accountService.addRole(new AppRole(null, "Client"));
 			accountService.addRole(new AppRole(null, "Artisan"));
 
-	   accountService.addUser(new AppUser(null,"latifa","latifa","latifa","lhafidi@gmail.com","latifa123", new ArrayList<>()));
-	   accountService.addUser(new AppUser(null,"soufiane","lhafidi","soufiane","mahzinho59@gmail.com","ahmed2022", new ArrayList<>()));
+
 	    accountService.addUser(new AppUser(null,"zahou","anas","anas","anas@gmail.com","123", new ArrayList<>()));
 	   accountService.addUser(new AppUser(null,"Elkhoudri","fadoua","fadoua","fadoua@gmail.com","123", new ArrayList<>()));
 
-		//accountService.addRoleToUser("latifa", "admin");
-	 //   accountService.addRoleToUser("anas", "admin");
-		//accountService.addRoleToUser("soufiane","client");
+	    //accountService.addRoleToUser("anas", "admin");
 	    //accountService.addRoleToUser("fadoua", "admin");
 
 

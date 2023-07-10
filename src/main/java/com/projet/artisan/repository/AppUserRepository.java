@@ -32,6 +32,10 @@ public interface AppUserRepository extends JpaRepository<AppUser,Long> {
 
    AppUser findByConfirmationToken(String confirmationToken);
 
+   boolean existsByUserName(String userName);
+
+   boolean existsByEmail(String userName);
+
 
    // AppUser delete(long id);
    // Boolean existsByUsername(String userName);
